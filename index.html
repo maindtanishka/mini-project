@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Little Green Learners</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--green:#2f9e5b;--dark:#1b3a28;--text:#4a5a50;--bg:#f4f9f0;--card:#fff;--line:#cfe5c6;--pill:#dff2d6;--deep:#1f7a44}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);font-size:18px;line-height:1.7}
+h1,h2,h3{font-family:'Baloo 2',sans-serif;color:var(--dark);margin:0 0 .4em;line-height:1.2}
+header{background:var(--green);color:#fff;position:sticky;top:0;z-index:5}
+.brand{font:800 1.8rem 'Baloo 2',sans-serif;padding:14px 20px 4px}
+nav{display:flex;gap:10px;padding:0 20px;overflow-x:auto}
+nav button{border:0;background:none;color:#fff;font:700 1.2rem 'Baloo 2',sans-serif;padding:10px 18px;border-radius:20px 20px 0 0;cursor:pointer;white-space:nowrap}
+nav button.on{background:var(--bg);color:var(--deep)}
+main{max-width:760px;margin:0 auto;padding:24px 20px 60px}
+section{display:none}section.on{display:block}
+.hero{background:linear-gradient(135deg,#e8f5dc,#fff3d1);border-radius:40px;padding:36px 30px}
+.hero h1{font-size:2.8rem}
+.btn{display:inline-block;background:var(--green);color:#fff;border:0;border-radius:30px;padding:12px 30px;font:700 1.2rem 'Baloo 2',sans-serif;box-shadow:0 5px 0 #1f7a44;cursor:pointer;margin-top:10px}
+.btn:active{transform:translateY(3px);box-shadow:0 2px 0 #1f7a44}
+.big{font-size:4rem;line-height:1;margin-top:14px}
+.card{background:var(--card);border:3px solid var(--line);border-radius:40px;padding:26px 28px;margin:22px 0}
+.card .emoji{font-size:3rem;line-height:1.2}
+.tag{display:inline-block;background:var(--pill);color:var(--deep);border-radius:20px;padding:2px 16px;font-weight:700;font-size:1.1rem}
+.link{color:var(--deep);font:700 1.3rem 'Baloo 2',sans-serif;background:none;border:0;padding:0;cursor:pointer}
+.pills{display:flex;flex-wrap:wrap;gap:12px;margin:18px 0}
+.pill{background:#fff;border:3px solid var(--line);border-radius:30px;padding:8px 22px;font:700 1.2rem 'Nunito',sans-serif;color:var(--dark);cursor:pointer}
+.pill.on{background:var(--pill);border-color:var(--green)}
+.hint{background:var(--pill);border-radius:24px;padding:18px 24px}
+.opt{display:block;width:100%;text-align:left;background:#fff;border:3px solid var(--line);border-radius:20px;padding:10px 18px;margin:8px 0;font:600 1rem 'Nunito',sans-serif;color:var(--dark);cursor:pointer}
+.opt.right{background:#c9efc9;border-color:var(--green)}
+.opt.wrong{background:#fde0dc;border-color:#e57367}
+.opt:disabled{cursor:default}
+.fact{background:#fff7d6;border-radius:20px;padding:14px 20px;margin-top:16px}
+.back{margin-bottom:10px}
+.badge{font-size:5rem;text-align:center}
+@media(max-width:480px){.hero h1{font-size:2.3rem}body{font-size:17px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">&#x1F331; Little Green Learners</div>
+  <nav id="nav">
+    <button type="button" data-tab="home" class="on">&#x1F3E0; Home</button>
+    <button type="button" data-tab="chapters">&#x1F4D6; Chapters</button>
+    <button type="button" data-tab="quizzes">&#x2753; Quizzes</button>
+    <button type="button" data-tab="results">&#x1F3C5; Results</button>
+  </nav>
+</header>
+<main>
+  <section id="home" class="on">
+    <div class="hero">
+      <h1>Learn to love our planet!</h1>
+      <p>Short lessons, fun facts and quizzes to help kids care for nature and be kind, helpful citizens.</p>
+      <button type="button" class="btn" onclick="show('chapters')">Start learning</button>
+      <div class="big">&#x1F333;</div>
+    </div>
+    <div class="card"><div class="emoji">&#x1F4D6;</div><h3>5 easy chapters</h3><p>Read about nature, waste, water, energy and being a good neighbour. Each chapter is short and simple.</p></div>
+    <div class="card"><div class="emoji">&#x2753;</div><h3>Fun quizzes</h3><p>Four questions per chapter. Answer them and see what you got right.</p></div>
+    <div class="card"><div class="emoji">&#x1F3C5;</div><h3>Your results</h3><p>Finish all five quizzes to see your final score and Green Star badge.</p></div>
+    <div class="card"><h3>Who is this for?</h3><p>Children aged 6 to 10 who are learning environmental studies and civic sense. Parents and teachers can read along and talk about each chapter together.</p></div>
+  </section>
+  <section id="chapters">
+    <div id="chapterList">
+      <h2>Our 5 chapters</h2>
+      <p>Tap a chapter to open it and start reading.</p>
+      <div id="cards"></div>
+    </div>
+    <div id="chapterView" style="display:none"></div>
+  </section>
+  <section id="quizzes">
+    <h2>Chapter quizzes</h2>
+    <p>Pick a chapter, then answer all four questions.</p>
+    <div class="pills" id="pills"></div>
+    <div id="quizBox" class="hint">&#x1F446; Choose a chapter to begin.</div>
+  </section>
+  <section id="results">
+    <h2>Your results</h2>
+    <div id="resultBox"></div>
+  </section>
+</main>
+<script>
+const chapters = [
+  {e:'🌍',t:'Our Green Planet',s:'Plants, animals and why nature matters',
+    body:['Earth is home to millions of plants and animals. Trees give us fresh air, shade and fruit. Bees help flowers grow by carrying pollen from one flower to another.','Every living thing needs clean air, clean water and food. When we keep nature healthy, we stay healthy too.','You can help by planting a seed, watering a plant and never hurting animals.'],
+    fact:'One big tree can give enough oxygen for several people to breathe.',
+    q:[['What do trees give us?',['Fresh air','Plastic','Smoke'],0],['Which small animal helps flowers grow?',['Bee','Shark','Camel'],0],['What do all living things need?',['Toys','Clean air and water','Sweets'],1],['Which is a kind thing to do for nature?',['Plant a seed','Break branches','Litter in parks'],0]]},
+  {e:'♻️',t:'Reduce, Reuse, Recycle',s:'Less waste, more fun',
+    body:['Reduce means using less. Say no to things you do not need, like extra plastic bags.','Reuse means using things again. An old jar can hold pencils, and a used notebook page can be rough paper.','Recycle means turning old things into new ones. Paper, glass, metal and some plastics can be recycled. Keep wet waste and dry waste in separate bins.'],
+    fact:'Recycling one glass bottle saves enough energy to light a bulb for hours.',
+    q:[['What does "reduce" mean?',['Use less','Throw more','Buy more'],0],['Which is a way to reuse?',['Burn a jar','Keep pencils in an old jar','Bury plastic'],1],['Where should old paper go?',['Recycling bin','River','Road'],0],['Why separate wet and dry waste?',['It is boring','It makes recycling easier','No reason'],1]]},
+  {e:'💧',t:'Save Water and Energy',s:'Every drop and every switch counts',
+    body:['Water is precious. Turn off the tap while brushing your teeth and fix leaking taps.','Electricity is made using resources, so switch off lights and fans when you leave a room.','Use sunlight and open windows in the day, and walk or cycle for short trips.'],
+    fact:'A dripping tap can waste many litres of water in a single day.',
+    q:[['What should you do while brushing your teeth?',['Leave the tap on','Turn off the tap','Fill a bucket'],1],['What should you do when leaving a room?',['Switch off lights and fans','Leave them on','Open the fridge'],0],['What can you use in the day instead of a lamp?',['Sunlight','Candles','Torch'],0],['Which saves energy on short trips?',['Walking or cycling','Taking a car','Taking a taxi'],0]]},
+  {e:'🤝',t:'Being a Good Citizen',s:'Civic sense starts with you',
+    body:['A good citizen follows rules, respects others and takes care of public places.','Stand in a queue, say please and thank you, and keep parks, buses and classrooms clean.','Helping elders, being kind to everyone and speaking politely make our country a better place.'],
+    fact:'Small kind actions, done by many people, change a whole city.',
+    q:[['What do good citizens do in a queue?',['Push ahead','Wait for their turn','Shout'],1],['How should we treat public places?',['Keep them clean','Draw on walls','Break things'],0],['How do we speak to others?',['Politely','Rudely','Loudly'],0],['Who should we help?',['Elders and friends','No one','Only ourselves'],0]]},
+  {e:'🏘️',t:'Caring for Our Community',s:'Clean streets and safe roads',
+    body:['Our community is the place where we live, play and learn together. Clean streets keep everyone healthy.','Put litter in the dustbin, never spit or throw waste on the road, and help plant trees in your area.','Follow road rules: look both ways, use the zebra crossing and wear a helmet or seat belt.'],
+    fact:'Seat belts and helmets save many lives every year.',
+    q:[['Where should litter go?',['In the dustbin','On the road','In a drain'],0],['Where should we cross the road?',['Zebra crossing','Anywhere','Between cars'],0],['What keeps us safe in a car?',['Seat belt','Headphones','Nothing'],0],['How can you help your area?',['Plant trees','Dump waste','Ignore it'],0]]}
+];
+const scores = {};
+const $ = id => document.getElementById(id);
+function show(tab){
+  document.querySelectorAll('section').forEach(s=>s.classList.toggle('on',s.id===tab));
+  document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('on',b.dataset.tab===tab));
+  if(tab==='chapters') closeChapter();
+  if(tab==='results') renderResults();
+  window.scrollTo(0,0);
+}
+document.querySelectorAll('#nav button').forEach(b=>b.onclick=()=>show(b.dataset.tab));
+$('cards').innerHTML = chapters.map((c,i)=>`
+  <div class="card"><div class="emoji">${c.e}</div>
+  <span class="tag">Chapter ${i+1}</span>
+  <h3>${c.t}</h3><p>${c.s}</p>
+  <button type="button" class="link" onclick="openChapter(${i})">Read chapter</button></div>`).join('');
+function openChapter(i){
+  const c = chapters[i];
+  $('chapterList').style.display='none';
+  const v = $('chapterView'); v.style.display='block';
+  v.innerHTML = `<button type="button" class="link back" onclick="closeChapter()">\u{2190} All chapters</button>
+    <div class="card"><div class="emoji">${c.e}</div><span class="tag">Chapter ${i+1}</span>
+    <h2>${c.t}</h2>${c.body.map(p=>`<p>${p}</p>`).join('')}
+    <div class="fact">\u{1F4A1} <b>Fun fact:</b> ${c.fact}</div>
+    <button type="button" class="btn" onclick="show('quizzes');startQuiz(${i})">Take the quiz</button></div>`;
+  window.scrollTo(0,0);
+}
+function closeChapter(){ $('chapterList').style.display='block'; $('chapterView').style.display='none'; }
+$('pills').innerHTML = chapters.map((c,i)=>`<button type="button" class="pill" data-i="${i}" onclick="startQuiz(${i})">${c.e} Chapter ${i+1}</button>`).join('');
+function startQuiz(i){
+  document.querySelectorAll('.pill').forEach(p=>p.classList.toggle('on',+p.dataset.i===i));
+  const c = chapters[i]; let got = 0, done = 0;
+  const box = $('quizBox'); box.className='';
+  box.innerHTML = `<h3>${c.e} ${c.t}</h3>` + c.q.map((q,qi)=>`
+    <div class="card" id="q${qi}"><b>${qi+1}. ${q[0]}</b>
+    ${q[1].map((o,oi)=>`<button type="button" class="opt" data-q="${qi}" data-o="${oi}">${o}</button>`).join('')}</div>`).join('')
+    + `<div id="quizMsg" class="hint" style="display:none"></div>`;
+  box.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{
+    const qi=+b.dataset.q, oi=+b.dataset.o, ans=c.q[qi][2];
+    const opts = box.querySelectorAll(`.opt[data-q="${qi}"]`);
+    opts.forEach(x=>{x.disabled=true; if(+x.dataset.o===ans) x.classList.add('right');});
+    if(oi===ans) got++; else b.classList.add('wrong');
+    if(++done===c.q.length){
+      scores[i]=got;
+      const m=$('quizMsg'); m.style.display='block';
+      const allDone = Object.keys(scores).length===chapters.length;
+      m.innerHTML = `\u{1F389} You got ${got} out of ${c.q.length} right.`
+        + (allDone ? ' All quizzes done! Open Results.' : '')
+        + `<br><button type="button" class="btn" onclick="startQuiz(${i})">Try quiz again</button>`;
+    }
+  });
+}
+function renderResults(){
+  const n = Object.keys(scores).length;
+  if(n<chapters.length){
+    $('resultBox').innerHTML = `<div class="card"><div class="emoji">\u{1F3C5}</div><p>Finish all five quizzes to see your final score and Green Star badge. You have finished ${n} of ${chapters.length}.</p></div>`;
+    return;
+  }
+  const total = Object.values(scores).reduce((a,b)=>a+b,0);
+  const msg = total>=16 ? 'Amazing! You are a true Green Star!' : total>=10 ? 'Great job! Keep caring for our planet.' : 'Good try! Read the chapters again and have another go.';
+  $('resultBox').innerHTML = `<div class="card"><div class="badge">\u{2B50}</div>
+    <h2 style="text-align:center">Green Star badge</h2>
+    <p style="text-align:center"><b>Final score: ${total} / 20</b></p>
+    <p style="text-align:center">${msg}</p>
+    ${chapters.map((c,i)=>`<p>${c.e} Chapter ${i+1}: ${scores[i]} / 4</p>`).join('')}</div>`;
+}
+</script>
+</body>
+</html>
